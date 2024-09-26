@@ -9,7 +9,8 @@ from teams.ai.tokenizers import Tokenizer
 from teams.ai.data_sources import DataSource
 
 from config import Config
-
+#Fetching Index data from Azure Ai Search.
+#Data in Azurea Ai Search is setup with an Indexer that index data on a Azure StorageAccount.
 async def get_embedding_vector(text: str):
     embeddings = AzureOpenAIEmbeddings(AzureOpenAIEmbeddingsOptions(
         azure_api_key=Config.AZURE_OPENAI_API_KEY,
@@ -99,7 +100,7 @@ class AzureAISearchDataSource(DataSource):
             if usedTokens + tokens > maxTokens:
                 break
             doc += source_info
-            doc += json.dumps(result["chunk"]) + "\n\n" #This return the chunk/text of indexed data/pdf.
+            doc += json.dumps(result["chunk"]) + "\n\n" #This return the chunk/text of indexed data.
             usedTokens += tokens
 
         return Result(doc, usedTokens, usedTokens > maxTokens)
